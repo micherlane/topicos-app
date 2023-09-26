@@ -1,30 +1,38 @@
-interface BarraProgressoProps{
+interface BarraProgressoProps {
     porcentagem: number;
 }
-export function BarraProgresso({porcentagem}: BarraProgressoProps){
+export function BarraProgresso({ porcentagem }: BarraProgressoProps) {
     const estiloBarraProgresso = {
         width: '80%',
-        backgroundColor: '#d3d3d3',
-        borderRadius: 40,
-    }
+        backgroundColor: '#10381dcc',
+        borderRadius: '40px',
+        height: '20px',
+    };
+
     const estiloProgresso = {
-        width: porcentagem + "%",
+        width: `${porcentagem}%`,
         backgroundColor: porcentagem < 50 ? '#FF7F7F' : '#6AC17D',
-        borderRadius: 40,
+        borderRadius: '40px',
+        height: '100%',
         transition: 'width 1s ease, background-color 1s ease',
-        padding: '0.25rem',
-    }
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    };
 
     const estiloTexto = {
         color: '#30475E',
         fontWeight: 'bold',
     }
 
+    const textoPorcentagem =
+        porcentagem > 0 ? `${porcentagem.toFixed(2)}%` : '';
+
     return (
         <div style={estiloBarraProgresso}>
             <div style={estiloProgresso}>
-                <span style={estiloTexto}>{porcentagem.toFixed(2)}%</span>
+                <span style={estiloTexto}>{textoPorcentagem}</span>
             </div>
         </div>
-    )
+    );
 }
