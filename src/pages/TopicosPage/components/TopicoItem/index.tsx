@@ -1,4 +1,6 @@
 import { Topico } from "../../../../models/Topico"
+import { TopicoItemAvaliacao } from "../TopicoItemAvaliacao";
+import { TopicoItemCitacao } from "../TopicoItemCitacao";
 
 interface TopicoItemProps{
     topico: Topico;
@@ -7,15 +9,8 @@ interface TopicoItemProps{
 export function TopicoItem({ topico }: TopicoItemProps){
     return (
         <div>
-            <div>
-                <p>{topico.descricao}</p>
-                <p>{topico.autor.nome}</p>
-            </div>
-            <div>
-            <p>{topico.like}</p>
-                <div>Barra de saldo</div>
-                <p>{topico.deslike}</p>
-            </div>
+            <TopicoItemCitacao topico={topico}/>
+            <TopicoItemAvaliacao topico={topico}/>
         </div>
     )
 }
