@@ -1,6 +1,7 @@
 import { Topico } from "../../../../models/Topico"
 import { TopicoItemAvaliacao } from "../TopicoItemAvaliacao";
 import { TopicoItemCitacao } from "../TopicoItemCitacao";
+import style from './style.module.css';
 
 interface TopicoItemProps{
     topico: Topico;
@@ -8,7 +9,7 @@ interface TopicoItemProps{
 
 export function TopicoItem({ topico }: TopicoItemProps){
     return (
-        <div>
+        <div className={style.topicoItem}> 
             <TopicoItemCitacao topico={topico}/>
             <TopicoItemAvaliacao topico={topico}/>
         </div>

@@ -1,6 +1,6 @@
 .avaliacao {
     display: flex;
-    border-top: 1px solid var(--grey);
+    border-top: 1px solid var(--grey-800);
     height: 40px;
     align-items: center;
     width: 100%;
