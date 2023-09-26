@@ -7,6 +7,8 @@ export class Topico{
     created_at: Date;
     tags: string[];
     active: boolean;
+    like: number = 0;
+    deslike: number = 0;
 
     constructor(id: string, descricao: string, autor: Autor, created_at: Date, tags: string[], active: boolean){
         this.id = id;
