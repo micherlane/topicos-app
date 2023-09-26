@@ -5,7 +5,7 @@ import { TopicosPage } from './pages/TopicosPage'
 
 function App() {
   return (
-   <div>
+   <div className="container">
       <Header/>
       <main>
         <TopicosPage/>
