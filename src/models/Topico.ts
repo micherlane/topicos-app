@@ -18,4 +18,14 @@ export class Topico{
         this.tags = tags;
         this.active = active;
     }
+
+    public darLike(): number {
+        const likes = this.like += 1;
+        return likes;
+    }
+    
+    public darDeslike(): number {
+        let deslikes = this.deslike += 1;
+        return deslikes;
+    }
 }

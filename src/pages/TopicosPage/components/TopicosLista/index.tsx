@@ -11,7 +11,7 @@ export function TopicoLista({ topicos }: TopicoListaProps){
             {
                 topicos.map((topico:Topico) => {
                     return( 
-                        <TopicoItem topico={topico}/>
+                        <TopicoItem key={topico.id} topico={topico}/>
                     )
                 })
             }
