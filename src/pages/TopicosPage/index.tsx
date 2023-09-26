@@ -3,30 +3,46 @@ import { ulid } from "ulidx";
 import { Autor } from "../../models/Autor";
 import { TopicoLista } from "./components/TopicosLista";
 
-export function TopicosPage(){
+export function TopicosPage() {
     const topicos = [
         new Topico(
-                ulid(),
-                "Java é a melhor linguagem",
-                new Autor(ulid(), 'Osiris', 'teresina', 'brasil'),
-                new Date,
-                ['java'],
-                true,
+            ulid(),
+            "Java é a melhor linguagem",
+            new Autor(ulid(), 'Osiris', 'teresina', 'brasil'),
+            new Date,
+            ['java'],
+            true,
         ),
         new Topico(
-                ulid(),
-                "Java é a melhor linguagem",
-                new Autor(ulid(), 'Osiris', 'teresina', 'brasil'),
-                new Date,
-                ['java'],
-                true,
-         ),
+            ulid(),
+            "Java é a melhor linguagem",
+            new Autor(ulid(), 'Osiris', 'teresina', 'brasil'),
+            new Date,
+            ['java'],
+            true,
+        ),
+        new Topico(
+            ulid(),
+            "Java é a melhor linguagem",
+            new Autor(ulid(), 'Osiris', 'teresina', 'brasil'),
+            new Date,
+            ['java'],
+            true,
+        ),
+        new Topico(
+            ulid(),
+            "Java é a melhor linguagem",
+            new Autor(ulid(), 'Osiris', 'teresina', 'brasil'),
+            new Date,
+            ['java'],
+            true,
+        ),
     ];
 
 
     return (
         <>
-           <TopicoLista topicos={topicos}/>
+            <TopicoLista topicos={topicos} />
         </>
     );
 }

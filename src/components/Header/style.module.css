@@ -1,2 +1,9 @@
 .header {
+    border-bottom: 1px solid var(--grey-900);
+    box-shadow: 0 0 2px var(--grey-900);
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+    color: var(--grey-900);
 }
