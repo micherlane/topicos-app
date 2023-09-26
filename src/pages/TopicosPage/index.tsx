@@ -7,8 +7,8 @@ export function TopicosPage() {
     const topicos = [
         new Topico(
             ulid(),
-            "Java é a melhor linguagem",
-            new Autor(ulid(), 'Osiris', 'teresina', 'brasil'),
+            "Não faça aos outros o que não quer que façam a você.",
+            new Autor(ulid(), 'Confucio', 'teresina', 'brasil'),
             new Date,
             ['java'],
             true,
