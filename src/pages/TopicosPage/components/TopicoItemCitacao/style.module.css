@@ -1,0 +1,14 @@
+.citacao {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.citacao .descricao{
+    font-style: italic;
+    font-size: 1.5rem;
+}
+
+.citacao .nomeAutor {
+    font-weight: bold;
+}

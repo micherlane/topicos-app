@@ -1,4 +1,5 @@
 import { Topico } from "../../../../models/Topico"
+import style from './style.module.css';
 
 interface TopicoItemCitacaoProps{
     topico: Topico;
@@ -6,9 +7,12 @@ interface TopicoItemCitacaoProps{
 export function TopicoItemCitacao({topico}: TopicoItemCitacaoProps){
     
     return (
-        <div>
-            <p>{topico.descricao}</p>
-            <p>{topico.autor.nome}</p>
+        <div className={style.citacao}>
+            <p className={style.descricao}>"{topico.descricao}"</p>
+            <p>
+               by <span className={style.nomeAutor}>{topico.autor.nome}</span>
+            </p>
+            
         </div>
     )
 }
