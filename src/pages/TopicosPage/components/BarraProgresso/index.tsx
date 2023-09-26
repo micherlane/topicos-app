@@ -1,8 +1,7 @@
 interface BarraProgressoProps{
     porcentagem: number;
-    saldoLikes: number;
 }
-export function BarraProgresso({porcentagem, saldoLikes}: BarraProgressoProps){
+export function BarraProgresso({porcentagem}: BarraProgressoProps){
     const estiloBarraProgresso = {
         height: '20px',
         width: '100%',
@@ -19,7 +18,7 @@ export function BarraProgresso({porcentagem, saldoLikes}: BarraProgressoProps){
     return (
         <div style={estiloBarraProgresso}>
             <div style={progresso}>
-                <span>{saldoLikes}</span>
+                <span>{porcentagem.toFixed(2)}%</span>
             </div>
         </div>
     )
