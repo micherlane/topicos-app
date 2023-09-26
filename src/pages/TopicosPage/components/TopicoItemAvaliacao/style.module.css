@@ -1,0 +1,25 @@
+.avaliacao {
+    display: flex;
+    border-top: 1px solid var(--grey);
+    height: 40px;
+    align-items: center;
+    width: 100%;
+}
+
+.avaliacao .dadosNumeros {
+    font-size: 1.5rem;
+    color: var(--grey-900);
+}
+
+.avaliacao button {
+    border: 1px solid var(--grey);
+    background-color: transparent;
+    border-radius: 2rem;
+    padding: 0.3rem;
+}
+
+.avaliacao button:hover {
+    background-color: #30475E;
+    color: white;
+    border: none;
+}

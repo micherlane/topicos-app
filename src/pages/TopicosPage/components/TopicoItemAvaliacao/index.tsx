@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Topico } from "../../../../models/Topico";
 import { BarraProgresso } from "../BarraProgresso";
+import style from './style.module.css';
+import { AiFillDislike, AiFillLike } from 'react-icons/ai';
+
 interface TopicoItemAvaliacaoProps{
     topico: Topico;
 }
@@ -44,12 +47,14 @@ export function TopicoItemAvaliacao({topico}: TopicoItemAvaliacaoProps){
     }
 
     return (
-        <div>
-            <p>{likes}</p>
-            <button onClick={() => handleLike(Tipo.UP)}>Like</button>
+        <div className={style.avaliacao}>
+            <div className={style.dadosNumeros}>{likes}</div>
+            <button onClick={() => handleLike(Tipo.UP)}><AiFillLike size={20}/></button>
+
             <BarraProgresso porcentagem={porcentagemLike}/>
-            <p>{deslikes}</p>
-            <button onClick={() => handleLike(Tipo.DOWN)}>Deslike</button>
+
+            <button onClick={() => handleLike(Tipo.DOWN)}><AiFillDislike size={20}/></button>
+            <div className={style.dadosNumeros}>{deslikes}</div>
         </div>
     )
 }
