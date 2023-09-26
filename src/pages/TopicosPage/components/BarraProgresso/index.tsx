@@ -3,22 +3,27 @@ interface BarraProgressoProps{
 }
 export function BarraProgresso({porcentagem}: BarraProgressoProps){
     const estiloBarraProgresso = {
-        height: '20px',
         width: '100%',
         backgroundColor: 'whitesmoke',
         borderRadius: 40,
     }
-    const progresso = {
+    const estiloProgresso = {
         width: porcentagem + "%",
-        height: '20px',
-        backgroundColor: porcentagem < 50 ? 'red' : 'green',
+        backgroundColor: porcentagem < 50 ? '#FF7F7F' : '#6AC17D',
         borderRadius: 40,
+        transition: 'width 1s ease, background-color 1s ease',
+        padding: '0.11rem'
+    }
+
+    const estiloTexto = {
+        color: '#30475E',
+        fontWeight: 'bold'
     }
 
     return (
         <div style={estiloBarraProgresso}>
-            <div style={progresso}>
-                <span>{porcentagem.toFixed(2)}%</span>
+            <div style={estiloProgresso}>
+                <span style={estiloTexto}>{porcentagem.toFixed(2)}%</span>
             </div>
         </div>
     )
