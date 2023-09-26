@@ -8,6 +8,7 @@
   :root {
     --white: #FFF;
     --black: #000;
+    --grey: #d3d3d3;
   }
   
   button,a {
