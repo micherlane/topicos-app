@@ -11,6 +11,10 @@
     font-size: 1.5rem;
 }
 
+.citacao .autoria {
+    margin-top: 0.5rem;
+}
+
 .citacao .nomeAutor {
     font-weight: bold;
 }

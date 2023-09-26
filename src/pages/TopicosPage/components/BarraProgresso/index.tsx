@@ -6,20 +6,18 @@ export function BarraProgresso({porcentagem}: BarraProgressoProps){
         width: '80%',
         backgroundColor: 'whitesmoke',
         borderRadius: 40,
-        height: '20px'
     }
     const estiloProgresso = {
         width: porcentagem + "%",
         backgroundColor: porcentagem < 50 ? '#FF7F7F' : '#6AC17D',
         borderRadius: 40,
         transition: 'width 1s ease, background-color 1s ease',
-        padding: '0.11rem',
-        height: '20px'
+        padding: '0.25rem',
     }
 
     const estiloTexto = {
         color: '#30475E',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     }
 
     return (

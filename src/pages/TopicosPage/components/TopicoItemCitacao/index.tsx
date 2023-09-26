@@ -9,7 +9,7 @@ export function TopicoItemCitacao({topico}: TopicoItemCitacaoProps){
     return (
         <div className={style.citacao}>
             <p className={style.descricao}>"{topico.descricao}"</p>
-            <p>
+            <p className={style.autoria}>
                by <span className={style.nomeAutor}>{topico.autor.nome}</span>
             </p>
             
