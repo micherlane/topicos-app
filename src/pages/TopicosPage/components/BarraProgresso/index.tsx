@@ -4,7 +4,7 @@ interface BarraProgressoProps{
 export function BarraProgresso({porcentagem}: BarraProgressoProps){
     const estiloBarraProgresso = {
         width: '80%',
-        backgroundColor: 'whitesmoke',
+        backgroundColor: '#d3d3d3',
         borderRadius: 40,
     }
     const estiloProgresso = {

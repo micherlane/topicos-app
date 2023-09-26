@@ -3,8 +3,8 @@
     box-shadow: 0 0 2px var(--grey-900);
     height: 100px;
     display: flex;
+    background-color: #10381d;
     align-items: center;
     padding-left: 2rem;
-    color: var(--grey-900);
-    margin-bottom: 1rem;
+    color: var(--white);
 }

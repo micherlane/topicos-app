@@ -17,6 +17,9 @@ main {
   align-items: center;
   justify-content: center;
   max-width: 100%;
+  background-color: rgba(211, 211, 211, 0.2);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .footer {
