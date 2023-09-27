@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Topico } from "../../../../models/Topico";
 import { BarraProgresso } from "../BarraProgresso";
 import style from './style.module.css';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
+import { api } from "../../../../services/api";
 
 interface TopicoItemAvaliacaoProps{
     topico: Topico;
@@ -18,6 +19,10 @@ export function TopicoItemAvaliacao({topico}: TopicoItemAvaliacaoProps){
     const [deslikes, setDeslike] = useState(topico.deslike);
     const [porcentagemLike, setPorcentagemLike] = useState(0);
 
+    useEffect(() => {
+        atualizarBarraProgresso();
+    }, []);
+
     // Adiciona likes ou deslikes com base no tipo informado;
     const handleLike = (tipo: Tipo) => {
 
@@ -29,6 +34,7 @@ export function TopicoItemAvaliacao({topico}: TopicoItemAvaliacaoProps){
             setDeslike(deslike);
         }
         
+        api.put(`/topicos/${topico.id}`, topico);
 
         atualizarBarraProgresso();
     }

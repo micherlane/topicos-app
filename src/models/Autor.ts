@@ -10,4 +10,13 @@ export class Autor {
         this.cidade = cidade;
         this.pais = pais;
     }
+
+    public static fromJSON(json: any): Autor {
+        return new Autor(
+          json.id,
+          json.nome,
+          json.cidade,
+          json.pais
+        );
+    }
 }
