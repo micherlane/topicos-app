@@ -1,67 +1,88 @@
-import { useEffect, useState } from "react";
+import {  useReducer } from "react";
 import { Topico } from "../../../../models/Topico";
 import { BarraProgresso } from "../BarraProgresso";
 import style from './style.module.css';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { putAtualizarTopico } from "../../../../services/api";
+import { ActionType, State, calcularPorcentagemLikes, reducer } from "../../../../reducers/likes_deslikes_reduce";
 
 interface TopicoItemAvaliacaoProps{
     topico: Topico;
 }
 
-enum Tipo {
-    UP,
-    DOWN
-}
 
 export function TopicoItemAvaliacao({topico}: TopicoItemAvaliacaoProps){
-    const [likes, setLikes] = useState(topico.like);
-    const [deslikes, setDeslike] = useState(topico.deslike);
-    const [porcentagemLike, setPorcentagemLike] = useState(0);
 
-    useEffect(() => {
-        atualizarBarraProgresso();
-    }, []);
+    const [state, dispatch] = useReducer(reducer, {
+        topico,
+        porcentagemLikes: calcularPorcentagemLikes(topico)
+    } as State)
 
-    // Adiciona likes ou deslikes com base no tipo informado;
-    const handleLike = async (tipo: Tipo) => {
-
-        if(tipo === Tipo.UP){
-            const like = topico.darLike();
-            setLikes(like);
-        } else {
-            const deslike = topico.darDeslike();
-            setDeslike(deslike);
+    const handleLike =  async () => {
+        const updatedTopico = {
+            ...state.topico,
+            like: state.topico.like + 1,
+        };
+    
+        dispatch({
+            type: ActionType.LIKE,
+            payload: {
+                topico: updatedTopico,
+            },
+        });
+    
+        try {
+            await putAtualizarTopico(updatedTopico);
+        } catch (error) {
+            dispatch({
+                type: ActionType.LIKE,
+                payload: {
+                    topico: {
+                        ...state.topico,
+                        like: state.topico.like - 1, 
+                    },
+                },
+            });
         }
-        
-        //api.put(`/topicos/${topico.id}`, topico);
-
-        await putAtualizarTopico(topico);
-        atualizarBarraProgresso();
     }
 
-    // Atualiza a barra de progresso com base na porcentagem
-    const atualizarBarraProgresso = () => {
-        const porcentagem = calcularPorcentagemLikes();
-        setPorcentagemLike(porcentagem);
-    }
 
-    const calcularPorcentagemLikes = () => {
-        const total = topico.like + topico.deslike;
-        const porcentagem = topico.like / total * 100;
+    const handleDeslike = async () => {
+        const updatedTopico = {
+            ...state.topico,
+            deslike: state.topico.deslike + 1,
+        };
+        dispatch({
+            type: ActionType.DESLIKE,
+            payload:{
+                topico: updatedTopico
+            }
+        });
 
-        return porcentagem;
-    }
+        try {
+            await putAtualizarTopico(updatedTopico);
+        } catch (error) {
+            dispatch({
+                type: ActionType.DESLIKE,
+                payload: {
+                    topico: {
+                        ...state.topico,
+                        deslike: state.topico.deslike - 1, 
+                    },
+                },
+            });
+        }
+    }    
 
     return (
         <div className={style.avaliacao}>
-            <div className={style.dadosNumeros}>{likes}</div>
-            <button onClick={() => handleLike(Tipo.UP)}><AiFillLike size={20}/></button>
+            <div className={style.dadosNumeros}>{state.topico.like}</div>
+            <button onClick={handleLike}><AiFillLike size={20}/></button>
 
-            <BarraProgresso porcentagem={porcentagemLike}/>
+            <BarraProgresso porcentagem={state.porcentagemLikes}/>
 
-            <button onClick={() => handleLike(Tipo.DOWN)}><AiFillDislike size={20}/></button>
-            <div className={style.dadosNumeros}>{deslikes}</div>
+            <button onClick={handleDeslike}><AiFillDislike size={20}/></button>
+            <div className={style.dadosNumeros}>{state.topico.deslike}</div>
         </div>
     )
 }

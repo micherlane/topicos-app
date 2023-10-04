@@ -21,21 +21,11 @@ export class Topico{
         deslike ? this.deslike = deslike : this.deslike = 0;
     }
 
-    public darLike(): number {
-        const likes = this.like += 1;
-        return likes;
-    }
-    
-    public darDeslike(): number {
-        let deslikes = this.deslike += 1;
-        return deslikes;
-    }
-
     public static fromJSON(json: any): Topico {
         return new Topico(
           json.id,
           json.descricao,
-          Autor.fromJSON(json.autor), // Convertendo o objeto Autor também
+          Autor.fromJSON(json.autor), 
           new Date(json.created_at),
           json.tags,
           json.active,

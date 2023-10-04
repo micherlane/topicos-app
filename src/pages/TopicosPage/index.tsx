@@ -8,14 +8,12 @@ export function TopicosPage() {
 
     useEffect(() => {
         const requisicaoGetTopicos = async () => {
-           
             const listaTopicos = await fetchTodosTopicos();
-            setTopicos(listaTopicos);
-            
+            setTopicos(listaTopicos);        
         }
 
         requisicaoGetTopicos();
-    }, [])
+    }, []);
 
 
     return (
