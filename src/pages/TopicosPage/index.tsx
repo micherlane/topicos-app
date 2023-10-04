@@ -1,23 +1,17 @@
 import { useEffect, useState } from "react";
-import { Topico } from "../../models/Topico";
 import { TopicoLista } from "./components/TopicosLista";
-import { api } from "../../services/api";
+import { fetchTodosTopicos } from "../../services/api";
+import { Topico } from "../../models/Topico";
 
 export function TopicosPage() {
-    const [topicos, setTopicos] = useState([]);
+    const [topicos, setTopicos] = useState([] as Topico[]);
 
     useEffect(() => {
         const requisicaoGetTopicos = async () => {
-            try {
-                const dados = await api.get('/topicos');
-                const listaTopicos = dados.data.map((json: any) => {
-                    return Topico.fromJSON(json);
-                });
-
-                setTopicos(listaTopicos);
-            } catch (error) {
-                console.log(error);
-            }
+           
+            const listaTopicos = await fetchTodosTopicos();
+            setTopicos(listaTopicos);
+            
         }
 
         requisicaoGetTopicos();
@@ -26,7 +20,7 @@ export function TopicosPage() {
 
     return (
         <>
-            <TopicoLista topicos={topicos} />
+            {topicos.length != 0 ? <TopicoLista topicos={topicos} /> : <p>Nenhum tópico cadastrado.</p>}
         </>
     );
 }
