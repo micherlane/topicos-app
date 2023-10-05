@@ -1,7 +1,12 @@
 .topicoLista{
-    min-width: 200px;
-    max-width: 720px;
     display: flex;
     flex-direction: column;
-    width: 100%;
+}
+
+@media(min-width: 720px){
+    .topicoLista {
+        flex-direction: row;
+        width: 60%;
+        flex-wrap: wrap;
+    }
 }

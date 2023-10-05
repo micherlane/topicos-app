@@ -21,7 +21,7 @@ export function BarraProgresso({ porcentagem }: BarraProgressoProps) {
     };
 
     const estiloTexto = {
-        color: '#30475E',
+        color: '#000',
         fontWeight: 'bold',
     }
 
