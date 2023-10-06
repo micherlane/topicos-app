@@ -2,7 +2,6 @@ import { Topico } from "../models/Topico";
 
 export interface State {
     topico: Topico,
-    porcentagemLikes: number;
 }
 
 export enum ActionType {
@@ -27,13 +26,6 @@ type DeslikeAdd = {
 type Action = LikeAdd | DeslikeAdd;
 
 
-export const calcularPorcentagemLikes = (topico: Topico) => {
-    const total = topico.like + topico.deslike;
-    const porcentagem = topico.like / total * 100;
-    return porcentagem;
-}
-
-
 export function reducer(state: State, action: Action): State {
     switch (action.type) {
       case ActionType.LIKE:{
@@ -42,18 +34,16 @@ export function reducer(state: State, action: Action): State {
         return {
           ...state,
           topico,
-          porcentagemLikes: calcularPorcentagemLikes(topico),
         };
       }
 
   
       case ActionType.DESLIKE:{
         const topico =  {...state.topico, deslike: state.topico.deslike + 1,}
-        
+       
         return {
           ...state,
           topico,
-          porcentagemLikes: calcularPorcentagemLikes(topico),
         };
       }
 

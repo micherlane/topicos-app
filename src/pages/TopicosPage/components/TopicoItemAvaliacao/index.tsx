@@ -4,7 +4,8 @@ import { BarraProgresso } from "../BarraProgresso";
 import style from './style.module.css';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { putAtualizarTopico } from "../../../../services/api";
-import { ActionType, State, calcularPorcentagemLikes, reducer } from "../../../../reducers/likes_deslikes_reduce";
+import { ActionType, State, reducer } from "../../../../reducers/topicoReducer";
+import {  ActionTypePorcentagem, calcularPorcentagemLikes, reducerPorcentagem } from "../../../../reducers/porcentagemReducer";
 
 interface TopicoItemAvaliacaoProps{
     topico: Topico;
@@ -13,76 +14,86 @@ interface TopicoItemAvaliacaoProps{
 
 export function TopicoItemAvaliacao({topico}: TopicoItemAvaliacaoProps){
 
-    const [state, dispatch] = useReducer(reducer, {
-        topico,
-        porcentagemLikes: calcularPorcentagemLikes(topico)
-    } as State)
+    const [topicoState, dispatchTopico] = useReducer(reducer, { topico } as State);
 
-    const handleLike =  async () => {
-        const updatedTopico = {
-            ...state.topico,
-            like: state.topico.like + 1,
-        };
+    const initialStatePorcentagem = { porcentagemLikes: calcularPorcentagemLikes(topico.like, topico.deslike) };
     
-        dispatch({
-            type: ActionType.LIKE,
-            payload: {
-                topico: updatedTopico,
-            },
-        });
-    
+    const [porcentagemLikesState, dispatchPorcentagemLikes] = useReducer(reducerPorcentagem, initialStatePorcentagem);
+
+
+    const atualizarTopicoServidor = async (updatedTopico: Topico): Promise<boolean> => {
         try {
             await putAtualizarTopico(updatedTopico);
+            return true;
         } catch (error) {
-            dispatch({
-                type: ActionType.LIKE,
-                payload: {
-                    topico: {
-                        ...state.topico,
-                        like: state.topico.like - 1, 
-                    },
-                },
-            });
+           return false;
         }
     }
 
+    const desfazerAtualizacao = (type: ActionType, topico: Topico) => {
+        const updatedLike = type === ActionType.LIKE ? topico.like - 1 : topico.like;
+        const updatedDeslike = type === ActionType.DESLIKE ? topico.deslike - 1 : topico.deslike;
 
-    const handleDeslike = async () => {
-        const updatedTopico = {
-            ...state.topico,
-            deslike: state.topico.deslike + 1,
-        };
-        dispatch({
-            type: ActionType.DESLIKE,
-            payload:{
-                topico: updatedTopico
+        dispatchTopico({
+            type,
+            payload: {
+                topico: {
+                    ...topicoState.topico,
+                    like: updatedLike,
+                    deslike: updatedDeslike,
+                },
+            },
+        });
+
+        dispatchPorcentagemLikes({
+            type: ActionTypePorcentagem.CHANGED,
+            payload: {
+                like: updatedLike,
+                deslike: updatedDeslike,
+            }
+        });
+    }
+
+    const handleLikeOrDeslike = async (type: ActionType) => {
+        const updatedLike = type === ActionType.LIKE ? topicoState.topico.like + 1 : topicoState.topico.like;
+        const updatedDeslike = type === ActionType.DESLIKE ? topicoState.topico.deslike + 1 : topicoState.topico.deslike;
+
+        dispatchTopico({
+            type,
+            payload: {
+                topico: {
+                    ...topicoState.topico,
+                    like: updatedLike,
+                    deslike: updatedDeslike,
+                },
+            },
+        });
+
+        dispatchPorcentagemLikes({
+            type: ActionTypePorcentagem.CHANGED,
+            payload: {
+                like: updatedLike,
+                deslike: updatedDeslike,
             }
         });
 
-        try {
-            await putAtualizarTopico(updatedTopico);
-        } catch (error) {
-            dispatch({
-                type: ActionType.DESLIKE,
-                payload: {
-                    topico: {
-                        ...state.topico,
-                        deslike: state.topico.deslike - 1, 
-                    },
-                },
-            });
+        const updatedTopico = { ...topicoState.topico, like: updatedLike, deslike: updatedDeslike };
+        const atualizouTopico = await atualizarTopicoServidor(updatedTopico);
+
+        if (!atualizouTopico) {
+            desfazerAtualizacao(type, updatedTopico);
         }
-    }    
+    }
 
     return (
         <div className={style.avaliacao}>
-            <div className={style.dadosNumeros}>{state.topico.like}</div>
-            <button onClick={handleLike}><AiFillLike size={20}/></button>
+            <div className={style.dadosNumeros}>{topicoState.topico.like}</div>
+            <button onClick={() => handleLikeOrDeslike(ActionType.LIKE)}><AiFillLike size={20}/></button>
 
-            <BarraProgresso porcentagem={state.porcentagemLikes}/>
+            <BarraProgresso porcentagem={porcentagemLikesState.porcentagemLikes}/>
 
-            <button onClick={handleDeslike}><AiFillDislike size={20}/></button>
-            <div className={style.dadosNumeros}>{state.topico.deslike}</div>
+            <button onClick={() => handleLikeOrDeslike(ActionType.DESLIKE)}><AiFillDislike size={20}/></button>
+            <div className={style.dadosNumeros}>{topicoState.topico.deslike}</div>
         </div>
     )
 }
