@@ -1,12 +1,14 @@
 import { Topico } from "../../../../models/Topico";
+import { useTopico } from "../../../../providers/TopicosProvider";
 import { TopicoItem } from "../TopicoItem";
 import style from './style.module.css';
 
-interface TopicoListaProps {
-    topicos: Topico[];
-}
 
-export function TopicoLista({ topicos }: TopicoListaProps){
+
+export function TopicoLista(){
+
+    const topicos = useTopico();
+    
     return (
         <div className={style.topicoLista}>
             {

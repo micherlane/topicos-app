@@ -4,7 +4,7 @@ import { BarraProgresso } from "../BarraProgresso";
 import style from './style.module.css';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { putAtualizarTopico } from "../../../../services/api";
-import { ActionType, State, reducer } from "../../../../reducers/topicoReducer";
+import { ActionType, State, topicoReducer } from "../../../../reducers/topicoReducer";
 import {  ActionTypePorcentagem, calcularPorcentagemLikes, reducerPorcentagem } from "../../../../reducers/porcentagemReducer";
 
 interface TopicoItemAvaliacaoProps{
@@ -14,14 +14,14 @@ interface TopicoItemAvaliacaoProps{
 
 export function TopicoItemAvaliacao({topico}: TopicoItemAvaliacaoProps){
 
-    const [topicoState, dispatchTopico] = useReducer(reducer, { topico } as State);
+    const [topicoState, dispatchTopico] = useReducer(topicoReducer, { topico } as State);
 
     const initialStatePorcentagem = { porcentagemLikes: calcularPorcentagemLikes(topico.like, topico.deslike) };
     
     const [porcentagemLikesState, dispatchPorcentagemLikes] = useReducer(reducerPorcentagem, initialStatePorcentagem);
 
 
-    const atualizarTopicoServidor = async (updatedTopico: Topico): Promise<boolean> => {
+    const atualizarTopico = async (updatedTopico: Topico): Promise<boolean> => {
         try {
             await putAtualizarTopico(updatedTopico);
             return true;
@@ -78,7 +78,7 @@ export function TopicoItemAvaliacao({topico}: TopicoItemAvaliacaoProps){
         });
 
         const updatedTopico = { ...topicoState.topico, like: updatedLike, deslike: updatedDeslike };
-        const atualizouTopico = await atualizarTopicoServidor(updatedTopico);
+        const atualizouTopico = await atualizarTopico(updatedTopico);
 
         if (!atualizouTopico) {
             desfazerAtualizacao(type, updatedTopico);

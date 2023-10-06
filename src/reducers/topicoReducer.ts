@@ -26,7 +26,7 @@ type DeslikeAdd = {
 type Action = LikeAdd | DeslikeAdd;
 
 
-export function reducer(state: State, action: Action): State {
+export function topicoReducer(state: State, action: Action): State {
     switch (action.type) {
       case ActionType.LIKE:{
         const topico = {...state.topico, like: state.topico.like + 1,} 
